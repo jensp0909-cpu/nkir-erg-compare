@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ field.display_name }}</h2>
+<p>Jouw tijd: <strong>{{ user_time_display }}</strong></p>
+
+<p class="headline">
+  Je staat op plek <strong>{{ comparison.rank }}</strong> van de <strong>{{ comparison.total }}</strong>
+  gescoorde tijden in deze categorie (2018&ndash;2023) &mdash;
+  je bent sneller dan <strong>{{ "%.1f"|format(comparison.percentile_faster_than) }}%</strong> van het veld.
+</p>
+
+<div class="nearest">
+  <div class="nearest-col">
+    <h3>Net sneller dan jou</h3>
+    {% if comparison.nearest_faster %}
+    <table>
+      <tr><th>Tijd</th><th>Naam</th><th>Club</th><th>Jaar</th></tr>
+      {% for r in comparison.nearest_faster %}
+      <tr>
+        <td>{{ format_seconds(r.time_seconds) }}</td>
+        <td>{{ r.athlete_name }}</td>
+        <td>{{ r.club_code }}</td>
+        <td>{{ r.year }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <p class="empty">Niemand &mdash; jij bent de snelste!</p>
+    {% endif %}
+  </div>
+  <div class="nearest-col">
+    <h3>Net langzamer dan jou</h3>
+    {% if comparison.nearest_slower %}
+    <table>
+      <tr><th>Tijd</th><th>Naam</th><th>Club</th><th>Jaar</th></tr>
+      {% for r in comparison.nearest_slower %}
+      <tr>
+        <td>{{ format_seconds(r.time_seconds) }}</td>
+        <td>{{ r.athlete_name }}</td>
+        <td>{{ r.club_code }}</td>
+        <td>{{ r.year }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <p class="empty">Niemand &mdash; jij bent de langzaamste.</p>
+    {% endif %}
+  </div>
+</div>
+
+<p><a href="{{ url_for('main.index') }}">&larr; Opnieuw vergelijken</a></p>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+{% if error %}
+  <div class="error">{{ error }}</div>
+{% endif %}
+<form method="post" action="{{ url_for('main.compare') }}" class="compare-form">
+  <label for="field_key">Categorie</label>
+  <select name="field_key" id="field_key" required>
+    <option value="" disabled {% if not selected_field %}selected{% endif %}>Kies je categorie&hellip;</option>
+    {% for f in fields %}
+      <option value="{{ f.key }}" {% if f.key == selected_field %}selected{% endif %}>
+        {{ f.display_name }} ({{ f.n }} tijden)
+      </option>
+    {% endfor %}
+  </select>
+
+  <label for="time_input">Jouw 2000m tijd (bv. 6:02.0)</label>
+  <input
+    type="text"
+    name="time_input"
+    id="time_input"
+    placeholder="6:02.0"
+    value="{{ time_input or '' }}"
+    required
+  >
+
+  <button type="submit">Vergelijk</button>
+</form>
+{% endblock %}

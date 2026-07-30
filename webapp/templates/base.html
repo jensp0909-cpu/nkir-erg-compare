@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <title>NKIR Erg Vergelijker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>NKIR Erg Vergelijker</h1>
+      <p class="subtitle">Vergelijk je 2000m ergtijd met historische NKIR-uitslagen (2018&ndash;2023)</p>
+    </header>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</body>
+</html>
