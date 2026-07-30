@@ -34,6 +34,10 @@ py -m venv .venv                                  # one-time setup
 - **`webapp/queries.py`** — all SQL and the rank/percentile/nearest-times logic (pooled across all scraped years per field), independent of Flask so it's unit-testable against an in-memory fixture DB.
 - **`webapp/`** — Flask app factory (`__init__.py`) + routes (`GET /`, `GET /fields` JSON, `POST /compare`) + Jinja2 templates. Server-rendered, no separate frontend build.
 
+## Deployment
+
+Deployed on Render (free tier) via `render.yaml` — `gunicorn run:app`, build command `pip install -r requirements.txt`. `data/nkir.db` is committed to the repo (it's small, ~330KB, and read-only at runtime) so the deployed app doesn't need to run the scraper itself; `data/raw_html/` (the scrape cache) stays gitignored. To refresh the deployed data after re-running the scraper locally, commit the updated `data/nkir.db` and push — Render auto-redeploys on push to `master`.
+
 ## Git Workflow
 
 - Commit work to git regularly as you go, not just at the end of a task — don't let uncommitted work pile up.
